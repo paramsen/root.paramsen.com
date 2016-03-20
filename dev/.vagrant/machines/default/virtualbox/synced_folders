@@ -1,0 +1,1 @@
+{"virtualbox":{"/www":{"guestpath":"/www","hostpath":"C:/Users/parnilsamsen/devzone/paramsendotcom","disabled":false,"__vagrantfile":true},"/vagrant":{"guestpath":"/vagrant","hostpath":"C:/Users/parnilsamsen/devzone/paramsendotcom/dev","disabled":false,"__vagrantfile":true}}}
