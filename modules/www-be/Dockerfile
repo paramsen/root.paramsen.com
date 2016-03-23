@@ -1,6 +1,5 @@
 FROM java:8-jdk
 
-
 MAINTAINER par.nils.amsen@gmail.com
 
 RUN apt-get update && apt-get install -y \
