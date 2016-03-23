@@ -2,7 +2,7 @@
 For now, just a listing of technologies
 
 * Vagrant
-  * Exact representation of Production environment using Vagrant.
+    * Exact representation of Production environment using Vagrant.
 * Docker
   * Advanced Docker setup oriented toward optimization, minimal footprint (and low hosting cost)
 * Ansible
