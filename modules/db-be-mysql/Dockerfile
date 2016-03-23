@@ -1,4 +1,4 @@
-FROM mysql/latest
+FROM mysql:latest
 
 MAINTAINER par.nils.amsen@gmail.com
 

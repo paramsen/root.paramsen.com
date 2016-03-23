@@ -1,11 +1,11 @@
-FROM 8-jdk:latest
+FROM java:8-jdk
 
 
 MAINTAINER par.nils.amsen@gmail.com
 
 RUN apt-get update && apt-get install -y \
   git \
-  maven \
+  # maven \
   && rm -rf /var/lib/apt/lists/*
 
 #TODO USE GRADLE
