@@ -1,5 +1,6 @@
 # README 
 For now, just a listing of technologies
+
 * Vagrant
   * Exact representation of Production environment using Vagrant.
 * Docker
