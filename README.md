@@ -1,4 +1,4 @@
-# README 
+# README
 For now, just a listing of technologies
 
 * Vagrant
@@ -8,7 +8,7 @@ For now, just a listing of technologies
 * Ansible
     * CI, deployment and Production server/environment provisioning
 * Unix/Linux
-    * Production env. 
+    * Production env.
     * Thorough security measures taken, the Linux server will be configured by the book [playbook] for optimal performance and security.
 * AWK/SED etc
 * MySQL
@@ -21,4 +21,4 @@ For now, just a listing of technologies
     * Gradle (Build tool in Groovy language, good bye Maven)
 * React.js
 * WebPack
-* Nginx
+* Nginx 
