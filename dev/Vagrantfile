@@ -1,3 +1,8 @@
+ENV['MYSQL_ROOT_PASSWORD'] = 'local'
+ENV['MYSQL_DATABASE'] = 'local'
+ENV['MYSQL_USER'] = 'local'
+ENV['MYSQL_PASSWORD'] = 'local'
+
 Vagrant.configure(2) do |config|
   config.vm.box = 'ubuntu/trusty64'
 
@@ -18,21 +23,25 @@ Vagrant.configure(2) do |config|
     sudo sed '$ s/.*/tty -s \&\&\ mesg n/' -r /root/.profile > /root/.profile.temp
     sudo mv /root/.profile.temp /root/.profile
 
-    containers=$(docker ps -a | awk  '{ if (NR > 1) { print $2; } }')
+    containers=$(docker ps -a | awk  '{ if (NR > 1) { print $1; } }')
     echo "Stop->Remove docker containers: $containers"
 
     docker stop $containers
-    docker rm $(docker ps -a | awk  '{ if (NR > 1) { print $2; } }')
+    docker rm $containers
 
     sudo apt-get update
   SHELL
 
   config.vm.provision 'docker' do |d|
-    d.build_image '/www/modules/db-be-mysql', args: '-t db-be-mysql'
+    d.build_image '/www/modules/db-be-mysql/', args: '-t db-be-mysql'
     # TODO: d.build_image "/www/modules/nginx", args: "-t nginx"
-    d.build_image '/www/modules/www-be', args: '-t www-be'
+    d.build_image '/www/modules/www-be/docker/run', args: '-t www-be'
     # TODO: d.build_image "/www/modules/www-fe", args: "-t www-fe"
     d.run 'db-be-mysql', auto_assign_name: true
-    d.run 'www-be', auto_assign_name: true, args: '--link db-be-mysql:db-be-mysql'
+    d.run 'www-be', auto_assign_name: true, args: '--link db-be-mysql:db-be-mysql \
+       -e MYSQL_ROOT_PASSWORD=local \
+       -e MYSQL_DATABASE=local \
+       -e MYSQL_USER=local \
+       -e MYSQL_PASSWORD=local'
   end
 end
