@@ -2,23 +2,24 @@ FROM java:8-jdk
 
 MAINTAINER par.nils.amsen@gmail.com
 
+RUN mkdir /www /docker-setup
+
+COPY build.jar /www
+
+WORKDIR /docker-setup
+
 RUN apt-get update && apt-get install -y \
+  unzip \
   git \
-  # maven \
-  && rm -rf /var/lib/apt/lists/*
+  wget ; \
+  rm -rf /var/lib/apt/lists/* ; \
+  wget -Nq https://services.gradle.org/distributions/gradle-2.12-bin.zip ; \
+  unzip -oq gradle-2.12-bin.zip -d /opt ; \
+  mv /opt/gradle* /opt/gradle
 
-#TODO USE GRADLE
+ENV GRADLE_HOME "/opt/gradle"
+ENV PATH ${PATH}:${GRADLE_HOME}/bin
 
-  # WORKDIR /code
-  #
-  # # Prepare by downloading dependencies
-  # ADD pom.xml /code/pom.xml
-  # RUN ["mvn", "dependency:resolve"]
-  # RUN ["mvn", "verify"]
-  #
-  # # Adding source, compile and package into a fat jar
-  # ADD src /code/src
-  # RUN ["mvn", "package"]
-  #
-  # EXPOSE 4567
-  # CMD ["/usr/lib/jvm/java-8-openjdk-amd64/bin/java", "-jar", "target/sparkexample-jar-with-dependencies.jar"]
+EXPOSE 1337
+
+CMD [$JAVA_HOME, "-jar", "build.jar"]
