@@ -10,4 +10,4 @@ EXPOSE 1337
 
 WORKDIR /www
 
-CMD [$JAVA_HOME, "-jar", "ROOT.jar"]
+CMD [${JAVA_HOME}/bin/java, "-jar", "ROOT.jar"]
