@@ -7,8 +7,8 @@ public class Main {
 
         while(true) {
             System.out.println(String.format("tick : %d", tick));
-
-            Thread.sleep(500);
+            tick++;
+            Thread.sleep(1000);
         }
     }
 }

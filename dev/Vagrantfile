@@ -83,6 +83,6 @@ Vagrant.configure(2) do |config|
   config.vm.provision 'shell', inline: <<-SHELL
     echo "Provisioner/shell:start env"
 
-    pushd /www/modules/run; docker-compose up; popd
+    pushd /www/modules/run; docker-compose -p paramsendotcom up; popd
   SHELL
 end
