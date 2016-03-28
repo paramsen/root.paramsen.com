@@ -1,0 +1,5 @@
+www-be:
+  build: .
+  ports: "80:8080"
+  args:
+    tag: "www-be"

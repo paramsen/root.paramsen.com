@@ -1,0 +1,6 @@
+db-be-mysql:
+  build: .
+  ports:
+    - "3306:3306"
+  args:
+    tag: "db-be-mysql"
