@@ -1,3 +1,12 @@
+# -*- mode: ruby -*-
+# # vi: set ft=ruby :
+
+# Require YAML module
+require 'yaml'
+
+# Read YAML file with box details
+env = YAML.load_file('env.yml')
+
 Vagrant.configure(2) do |config|
   config.vm.box = 'ubuntu/trusty64'
 
@@ -13,18 +22,41 @@ Vagrant.configure(2) do |config|
     vb.customize ['modifyvm', :id, '--nictype2', 'Am79C973']
   end
 
-  config.vm.provision 'shell',  inline: <<-SHELL
-    echo "Fix \"stdout is not a tty\" prompt"
-    sudo sed '$ s/.*/tty -s \&\&\ mesg n/' -r /root/.profile > /root/.profile.temp
-    sudo mv /root/.profile.temp /root/.profile
+  config.vm.provision 'shell', args: env.join(' ').to_s, inline: <<-SHELL
+    echo "Provisioner/shell:setup"
+
+    if [ ! -f /etc/profile.bup ]; then
+      cp /etc/profile /etc/profile.bup
+    else
+      echo "Reset /etc/profile"
+      cp /etc/profile.bup /etc/profile
+    fi
+
+    echo "Provision /etc/profile"
+
+    oldIFS="$IFS"
+    IFS=":"
+
+    echo "\n# Provisioning params" >> /etc/profile
+    for arg; do
+      declare -a dictionary=($arg)
+
+      echo "export ${dictionary[0]}=${dictionary[1]}" >> /etc/profile
+    done
+
+    IFS="$oldIFS"
+  SHELL
+
+  config.vm.provision 'shell', args: env.join(' ').to_s, inline: <<-SHELL
+    echo "Provisioner/shell:provision"
 
     containers=$(docker ps -a | awk  '{ if (NR > 1) { print $1; } }')
     echo "Stop->Remove docker containers: $containers"
 
-    docker stop $containers
-    docker rm $containers
+    docker stop $containers 2> /dev/null
+    docker rm $containers 2> /dev/null
 
-    sudo apt-get update
+    # TODO: sudo apt-get update
   SHELL
 
   config.vm.provision 'docker' do |d|
