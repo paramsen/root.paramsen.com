@@ -1,5 +1,8 @@
-www-be:
-  build: .
-  ports: "80:8080"
-  args:
-    tag: "www-be"
+version: '2'
+
+services:
+  www-be:
+    build:
+      context: .
+    ports:
+      - "80:8080"
