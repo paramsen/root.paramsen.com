@@ -1,0 +1,9 @@
+version: '2'
+
+services:
+  www-be:
+    build:
+      context: .
+    ports:
+      - "80:8080"
+    container_name: "www-be"

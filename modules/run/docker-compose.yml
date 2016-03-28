@@ -1,0 +1,16 @@
+# Run it all. For conf: export DEPLOY_TYPE as "dev" or "prod" in your shell
+version: '2'
+
+services:
+  www-be:
+    extends:
+      file: ../www-be/docker/run/docker-compose.yml
+      service: www-be
+    env_file: deploy-type/${DEPLOY_TYPE}/env.args
+  db-be-mysql:
+    extends:
+      file: ../db-be-mysql/docker/run/docker-compose.yml
+      service: db-be-mysql
+    env_file: deploy-type/${DEPLOY_TYPE}/env.args
+  #TODO www-fe
+  #TODO nginx
