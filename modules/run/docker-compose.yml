@@ -11,7 +11,7 @@ services:
       - NODE_ENV=$NODE_ENV
     restart: always
     depends_on: 
-      - nginx
+      - db
 
   db: 
     image: mysql:latest
@@ -28,6 +28,7 @@ services:
     restart: always
     volumes:
       - '../nginx:/etc/nginx:ro'
-      - '/www/public:/www/public:ro'
     ports:
       - '80:80'
+    depends_on: 
+      - be
