@@ -1,4 +1,3 @@
 **/.vagrant
 **.DS_STORE
-**/prod/env.args
-**/ROOT.jar
+

@@ -1,9 +1,9 @@
 version: '2'
 
 services:
-  www-be:
+  db-be-mysql:
     build:
       context: .
     ports:
-      - "80:8080"
-    container_name: "www-be"
+      - "3306:3306"
+    container_name: "db-be"

@@ -1,88 +1,51 @@
 # -*- mode: ruby -*-
 # # vi: set ft=ruby :
 
-# Require YAML module
-require 'yaml'
-
-# Read YAML file with box details
-env = YAML.load_file('env.yml')
-
 Vagrant.configure(2) do |config|
   config.vm.box = 'ubuntu/trusty64'
 
-  config.vm.network 'forwarded_port', guest: 80, host: 8088
+  config.vm.network 'forwarded_port', guest: 80, host: 8080
   config.vm.network 'private_network', ip: '192.168.33.10'
   config.vm.synced_folder '../', '/www'
 
   config.vm.provider 'virtualbox' do |vb|
     vb.memory = '1024'
-    # For NAT adapter
-    vb.customize ['modifyvm', :id, '--nictype1', 'Am79C973']
-    # For host-only adapter
-    vb.customize ['modifyvm', :id, '--nictype2', 'Am79C973']
   end
 
-  config.vm.provision 'shell', args: env.join(' ').to_s, inline: <<-SHELL
-    echo "Provisioner/shell:setup"
+  config.vm.provision 'file', keep_color: true, name: 'file:env', source: 'env.sh', destination: '~/paramsendotcom_env.sh'
 
-    if [ ! -f /etc/profile.bup ]; then
-      cp /etc/profile /etc/profile.bup
-    else
-      echo "Reset /etc/profile"
-      cp /etc/profile.bup /etc/profile
-    fi
+  config.vm.provision 'shell', keep_color: true, name: 'shell:provision',  inline: <<-SHELL
+    echo "Provisioner/shell:provision"
 
-    echo "Provision /etc/profile -> Set env vars"
-    echo "\n# Provisioning env vars" >> /etc/profile
+    apt-get update -qq
 
-    echo "export DEPLOY_TYPE=dev" >> /etc/profile
-
-    oldIFS="$IFS"
-    IFS=":"
-
-    for arg; do
-      declare -a dictionary=($arg)
-
-      echo "export ${dictionary[0]}=${dictionary[1]}" >> /etc/profile
-    done
-
-    IFS="$oldIFS"
-
-    #TODO apt-get update
     if [ ! -e /usr/local/bin/docker-compose ]; then
       curl -L https://github.com/docker/compose/releases/download/1.7.0-rc1/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
       chmod +x /usr/local/bin/docker-compose
     fi
 
+    ln -s /opt/VBoxGuestAdditions-*/lib/VBoxGuestAdditions /usr/lib/VBoxGuestAdditions || : >2 /dev/null #ignore errs if already exists
+
+    if [ ! -e /etc/profile.d/paramsendotcom_env.sh ]; then
+      cp /home/vagrant/paramsendotcom_env.sh /etc/profile.d/paramsendotcom_env.sh
+    fi
+  SHELL
+
+  config.vm.provision 'shell', keep_color: true, privileged: false, name: 'shell:setup ~> as vagrant', inline: <<-SHELL
+    echo "Provisioner/shell:setup"
   SHELL
 
   config.vm.provision 'docker' do |d|; end
 
-  config.vm.provision 'shell', args: env.join(' ').to_s, inline: <<-SHELL
-    echo "Provisioner/shell:provision"
+  config.vm.provision 'shell', keep_color: true, privileged: false, name: 'shell:build ~> as vagrant', run: 'always', inline: <<-SHELL
+    echo "Provisioner/shell:build"
 
-    containers=$(docker ps -a | awk  '{ if (NR > 1) { print $1; } }')
-    echo "Stop->Remove docker containers: $containers"
-
-    docker stop $containers 2> /dev/null
-    docker rm $containers 2> /dev/null
-
-    exit 0
+    pushd /www/modules/run; docker-compose build; popd
   SHELL
 
-  if ENV['FORCE'] == 'true'
-    config.vm.provision 'shell', inline: <<-SHELL
-      echo "==================================================================="
-      echo "=== Provisioner/shell:forced | FORCE ENV SET (will rebuild stuff)"
-      echo "==================================================================="
+  config.vm.provision 'shell', keep_color: true, privileged: false, name: 'shell:start ~> as vagrant', run: 'always', inline: <<-SHELL
+    echo "Provisioner/shell:start"
 
-      pushd /www/modules/run; docker-compose build; popd
-    SHELL
-  end
-
-  config.vm.provision 'shell', inline: <<-SHELL
-    echo "Provisioner/shell:start env"
-
-    pushd /www/modules/run; docker-compose -p paramsendotcom up; popd
+    pushd /www/modules/run; docker-compose up; popd
   SHELL
 end

@@ -1,16 +1,33 @@
-# Run it all. For conf: export DEPLOY_TYPE as "dev" or "prod" in your shell
 version: '2'
 
 services:
-  www-be:
+  be:
     extends:
-      file: ../www-be/docker/run/docker-compose.yml
-      service: www-be
-    env_file: deploy-type/${DEPLOY_TYPE}/env.args
-  db-be-mysql:
-    extends:
-      file: ../db-be-mysql/docker/run/docker-compose.yml
-      service: db-be-mysql
-    env_file: deploy-type/${DEPLOY_TYPE}/env.args
-  #TODO www-fe
-  #TODO nginx
+      file: ../be/docker/docker-compose.yml
+      service: be
+    volumes:
+      - '/www/public:/www/public'
+    environment:
+      - NODE_ENV=$NODE_ENV
+    restart: always
+    depends_on: 
+      - nginx
+
+  db: 
+    image: mysql:latest
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
+      - MYSQL_DATABASE=$MYSQL_DATABASE
+      - MYSQL_USER=$MYSQL_USER
+      - MYSQL_PASSWORD=$MYSQL_PASSWORD
+
+
+  nginx:
+    image: nginx:latest
+    restart: always
+    volumes:
+      - '../nginx:/etc/nginx:ro'
+      - '/www/public:/www/public:ro'
+    ports:
+      - '80:80'
