@@ -1,9 +1,0 @@
-version: '2'
-
-services:
-  db-be-mysql:
-    build:
-      context: .
-    ports:
-      - "3306:3306"
-    container_name: "db-be"

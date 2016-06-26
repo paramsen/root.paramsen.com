@@ -24,6 +24,11 @@ Vagrant.configure(2) do |config|
       chmod +x /usr/local/bin/docker-compose
     fi
 
+    if [ ! -e /usr/bin/node ]; then
+      curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
+      sudo apt-get install -y nodejs
+    fi
+
     ln -s /opt/VBoxGuestAdditions-*/lib/VBoxGuestAdditions /usr/lib/VBoxGuestAdditions || : >2 /dev/null #ignore errs if already exists
 
     if [ ! -e /etc/profile.d/paramsendotcom_env.sh ]; then
@@ -40,12 +45,12 @@ Vagrant.configure(2) do |config|
   config.vm.provision 'shell', keep_color: true, privileged: false, name: 'shell:build ~> as vagrant', run: 'always', inline: <<-SHELL
     echo "Provisioner/shell:build"
 
-    pushd /www/modules/run; docker-compose build; popd
+    pushd /www/modules/run/dev; docker-compose build; popd
   SHELL
 
   config.vm.provision 'shell', keep_color: true, privileged: false, name: 'shell:start ~> as vagrant', run: 'always', inline: <<-SHELL
     echo "Provisioner/shell:start"
 
-    pushd /www/modules/run; docker-compose up; popd
+    pushd /www/modules/run/dev; docker-compose up; popd
   SHELL
 end

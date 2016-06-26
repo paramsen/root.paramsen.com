@@ -3,7 +3,7 @@ version: '2'
 services:
   be:
     extends:
-      file: ../be/docker/docker-compose.yml
+      file: ../../be/docker/docker-compose.yml
       service: be
     volumes:
       - '/www/public:/www/public'
@@ -12,6 +12,8 @@ services:
     restart: always
     depends_on: 
       - db
+      - db-test
+
 
   db: 
     image: mysql:latest
@@ -22,12 +24,20 @@ services:
       - MYSQL_USER=$MYSQL_USER
       - MYSQL_PASSWORD=$MYSQL_PASSWORD
 
+  db-test: 
+    image: mysql:latest
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
+      - MYSQL_DATABASE=$MYSQL_DATABASE
+      - MYSQL_USER=$MYSQL_USER
+      - MYSQL_PASSWORD=$MYSQL_PASSWORD
 
   nginx:
     image: nginx:latest
     restart: always
     volumes:
-      - '../nginx:/etc/nginx:ro'
+      - '../../nginx:/etc/nginx:ro'
     ports:
       - '80:80'
     depends_on: 
