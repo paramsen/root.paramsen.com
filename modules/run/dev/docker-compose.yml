@@ -27,6 +27,8 @@ services:
   db-test: 
     image: mysql:latest
     restart: always
+    ports:
+      - '3306:3306' # expose test db 
     environment:
       - MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
       - MYSQL_DATABASE=$MYSQL_DATABASE
