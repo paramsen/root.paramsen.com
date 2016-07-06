@@ -9,11 +9,15 @@ services:
       - '/www/public:/www/public'
     environment:
       - NODE_ENV=$NODE_ENV
+      - DB_HOST=$DB_HOST
+      - DB_NAME=$DB_NAME
+      - DB_USER=$DB_USER
+      - DB_PW=$DB_PW
+
     restart: always
     depends_on: 
       - db
       - db-test
-
 
   db: 
     image: mysql:latest
