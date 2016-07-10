@@ -15,3 +15,4 @@ export DB_PW=$MYSQL_PASSWORD
 export DB_NAME=$MYSQL_DATABASE
 export DB_HOST_TEST="db-test"
 export DB_PORT_TEST="3307"
+export SESSION_SECRET="keyboard cat"
