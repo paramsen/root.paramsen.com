@@ -9,6 +9,7 @@ services:
       - '/www/public:/www/public'
     environment:
       - NODE_ENV=$NODE_ENV
+      - SESSION_SECRET=$SESSION_SECRET
       - DB_HOST=$DB_HOST
       - DB_NAME=$DB_NAME
       - DB_USER=$DB_USER

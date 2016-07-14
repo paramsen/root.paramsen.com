@@ -16,6 +16,6 @@ send "docker-compose create be\r"
 expect "vagrant@*"
 
 send "docker-compose start be\r"
-expect "vagrant@*"
+expect "*done"
 
 exit 0
