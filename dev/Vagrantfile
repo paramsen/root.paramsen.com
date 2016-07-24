@@ -16,6 +16,8 @@ Vagrant.configure(2) do |config|
 
   config.vm.provision 'file', source: 'conf/env.sh', destination: '~/env_copy.sh'
 
+  config.vm.provision 'docker' do |d|; end
+
   config.vm.provision 'shell', keep_color: true, name: 'shell:provision',  inline: <<-SHELL
     apt-get update -qq
     apt-get install -y -qq mysql-client
@@ -38,14 +40,22 @@ Vagrant.configure(2) do |config|
 
   SHELL
 
-  config.vm.provision 'docker' do |d|; end
-
-  config.vm.provision 'shell', keep_color: true, privileged: false, name: 'shell:build:start ~> as user vagrant', run: 'always', inline: <<-SHELL
+  config.vm.provision 'shell', keep_color: true, name: 'shell:build:start ~> as user vagrant', run: 'always', inline: <<-SHELL
     pushd /www/modules/run/dev
 
     docker-compose build
     docker-compose up -d
-    bash /www/dev/conf/db.sh
+    docker-compose logs --tail 5 -f  db| sed -e '/ready for connections/q' #wait until db is ready...
+    docker-compose logs --tail 5 -f db-test| sed -e '/ready for connections/q'
+
+SHELL
+
+config.vm.provision 'shell', keep_color: true, name: 'shell:build:start ~> as user vagrant', run: 'always', inline: <<-SHELL
+    pushd /www/dev/conf/
+    ./db.sh #has to be executed after the dbs are ready
+    popd
+
+    pushd /www/modules/run/dev
 
     docker-compose logs -f
   SHELL

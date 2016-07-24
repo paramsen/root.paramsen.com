@@ -8,12 +8,12 @@ services:
     volumes:
       - '/www/public:/www/public'
     environment:
-      - NODE_ENV=$NODE_ENV
-      - SESSION_SECRET=$SESSION_SECRET
-      - DB_HOST=$DB_HOST
-      - DB_NAME=$DB_NAME
-      - DB_USER=$DB_USER
-      - DB_PW=$DB_PW
+      NODE_ENV: $NODE_ENV
+      SESSION_SECRET: $SESSION_SECRET
+      DB_HOST: $DB_HOST
+      DB_NAME: $DB_NAME
+      DB_USER: $DB_USER
+      DB_PW: $DB_PW
 
     restart: always
     depends_on: 
@@ -24,10 +24,10 @@ services:
     image: mysql:latest
     restart: always
     environment:
-      - MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
-      - MYSQL_DATABASE=$MYSQL_DATABASE
-      - MYSQL_USER=$MYSQL_USER
-      - MYSQL_PASSWORD=$MYSQL_PASSWORD
+      MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
+      MYSQL_DATABASE: $MYSQL_DATABASE
+      MYSQL_USER: $MYSQL_USER
+      MYSQL_PASSWORD: $MYSQL_PASSWORD
 
   db-test: 
     image: mysql:latest
@@ -35,10 +35,10 @@ services:
     ports:
       - '3306:3306' # expose test db 
     environment:
-      - MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
-      - MYSQL_DATABASE=$MYSQL_DATABASE
-      - MYSQL_USER=$MYSQL_USER
-      - MYSQL_PASSWORD=$MYSQL_PASSWORD
+      MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
+      MYSQL_DATABASE: $MYSQL_DATABASE
+      MYSQL_USER: $MYSQL_USER
+      MYSQL_PASSWORD: $MYSQL_PASSWORD
 
   nginx:
     image: nginx:latest
