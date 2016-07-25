@@ -5,7 +5,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 pushd $DIR/../../modules/run/dev
 
 function execSql {
-    docker-compose exec "$1" mysql -u $DB_USER -p$DB_PW -D $DB_NAME -Bse "$2"
+    docker-compose exec -T "$1" mysql -u $DB_USER -p$DB_PW -D $DB_NAME -Bse "$2"
 }
 
 function createArticleTable {
@@ -18,7 +18,7 @@ function createUserTable {
 
 function insertUser {
     if [[ "$(execSql $1 'select * from User')" != *root* ]];then
-        execSql $1 "insert into User (username, password) values ('root', '$2a$10$P28l/aAtwwidrplUoBldIuj4kToolecvnnWQw02ItrA1Gnh/Y0oRa');"
+        execSql $1 "insert into User (username, password) values ('root', '\$2a\$10\$P28l/aAtwwidrplUoBldIuj4kToolecvnnWQw02ItrA1Gnh/Y0oRa');"
     else
         echo "User root already exist in db: $1"
     fi

@@ -47,7 +47,6 @@ Vagrant.configure(2) do |config|
     docker-compose up -d
     docker-compose logs --tail 5 -f  db| sed -e '/ready for connections/q' #wait until db is ready...
     docker-compose logs --tail 5 -f db-test| sed -e '/ready for connections/q'
-
 SHELL
 
 config.vm.provision 'shell', keep_color: true, name: 'shell:build:start ~> as user vagrant', run: 'always', inline: <<-SHELL
