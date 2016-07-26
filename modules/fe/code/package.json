@@ -1,0 +1,15 @@
+{
+  "name": "fe",
+  "version": "1.0.0",
+  "description": "Frontend",
+  "main": "index.js",
+  "scripts": {
+    "webpack": "./node_modules/webpack/bin/webpack.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Pär Amsen",
+  "license": "ISC",
+  "devDependencies": {
+    "webpack": "^1.13.1"
+  }
+}
