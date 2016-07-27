@@ -40,7 +40,8 @@ Vagrant.configure(2) do |config|
 
   SHELL
 
-  config.vm.provision 'shell', keep_color: true, name: 'shell:build:start ~> as user vagrant', run: 'always', inline: <<-SHELL
+  config.vm.provision 'shell', keep_color: true, name: 'shell:build:start', run: 'always', inline: <<-SHELL
+    sh /www/dev/run/fe.sh
     pushd /www/modules/run/dev
 
     docker-compose build
