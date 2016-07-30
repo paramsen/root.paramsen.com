@@ -1,9 +1,20 @@
 import 'babel-polyfill';
 import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './component/App'
+import {render} from 'react-dom';
+import {Router, Route, IndexRoute, browserHistory} from 'react-router';
+import App from './component/App';
+import Home from './component/Home';
+import Article from './component/Article';
+import About from './component/About';
 
-ReactDOM.render(
-    <App/>,
+render(
+    <Router history={browserHistory}>
+        <Route path="/" component={App}>
+            <IndexRoute  component={Home}/>
+            <Route path="/article/:id" component={Article}/>
+            <Route path="/about" component={About}/>
+        </Route>
+    </Router>,
     document.getElementById('root')
 );
+

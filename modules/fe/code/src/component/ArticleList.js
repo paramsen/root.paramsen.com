@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router';
 import {shortFormat} from '../util/dateFormat'
 
 export default function ArticleList() {
@@ -21,14 +22,14 @@ function renderArticleItem(item) {
     return(
         <div key={item.id}>
             <h3>
-                <a href={'http://localhost:1337/article/' + item.name}>
+                <Link to={'/article/' + item.name}>
                     {item.title}
-                </a>
+                </Link>
             </h3>
             <p style={bodyStyle}>
-                <a href={'http://localhost:1337/article/' + item.name}>
+                <Link to={'/article/' + item.name}>
                     {item.excerpt}
-                </a>
+                </Link>
             </p>
             <p>{shortFormat(item.updated)}</p>
         </div>

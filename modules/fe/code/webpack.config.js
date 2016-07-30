@@ -29,6 +29,7 @@ module.exports = {
     devtool: 'cheap-module-eval-source-map',
     devServer: {
         contentBase: './src',
-        port: '1337'
+        port: '1337',
+        historyApiFallback: true
     }
 }
