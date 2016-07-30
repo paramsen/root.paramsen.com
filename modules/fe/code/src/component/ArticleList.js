@@ -22,7 +22,7 @@ function renderArticleItem(item) {
                     {item.title}
                 </Link>
             </h3>
-            <p style={bodyStyle}>
+            <p>
                 <Link to={'/article/' + item.name}>
                     {item.excerpt}
                 </Link>
@@ -31,5 +31,3 @@ function renderArticleItem(item) {
         </div>
     );
 }
-
-const bodyStyle = {whiteSpace: 'pre'};
