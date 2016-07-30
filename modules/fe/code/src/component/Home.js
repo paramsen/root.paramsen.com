@@ -1,5 +1,5 @@
 import React from 'react';
-import ArticleList from './ArticleList';
+import ArticleList from '../container/ArticleList';
 
 export default React.createClass({
     render() {
