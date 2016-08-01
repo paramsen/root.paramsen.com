@@ -6,11 +6,11 @@ import {Provider} from 'react-redux';
 import rootReducer from './reducer';
 import {browserHistory} from 'react-router';
 import createSagaMiddleware from 'redux-saga';
-import AppRouter from './container';
 import articleSaga from './saga/article';
+import AppRouter from './container';
 
-import {getArticles} from './action/articleAction';
 import {routeLocationChange} from './action/routeAction';
+import {getArticles} from './action/articleAction';
 
 const sagaMiddleware = createSagaMiddleware();
 const store = createStore(rootReducer, applyMiddleware(sagaMiddleware));

@@ -21,7 +21,7 @@ const reducer = combineReducers({
 
 export function getArticles(state) {
     const reducer = state.articleReducer;
-    if(reducer) {
+    if(reducer && reducer.articles) {
         return reducer.articles;
     }
     return [];
