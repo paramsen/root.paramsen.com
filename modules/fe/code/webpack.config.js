@@ -13,8 +13,8 @@ module.exports = {
     },
     plugins: [ //plugins (can) work on the entire bundle, in contrast to loaders (difference not clear imho)
             new webpack.HotModuleReplacementPlugin(),
-            new webpack.optimize.OccurenceOrderPlugin(),
-            new webpack.optimize.UglifyJsPlugin()
+            new webpack.optimize.OccurenceOrderPlugin()/*,
+            new webpack.optimize.UglifyJsPlugin()*/
     ],
     module: {
         loaders: [ //loaders transform EACH file, usable as pre or post processors
