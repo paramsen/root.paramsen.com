@@ -1,31 +1,27 @@
 import 'babel-polyfill';
 import React from 'react';
 import {render} from 'react-dom';
-import {Router, Route, IndexRoute, browserHistory} from 'react-router';
 import {createStore} from 'redux';
 import {Provider} from 'react-redux';
 import rootReducer from './reducer';
+import {browserHistory} from 'react-router';
+import AppRouter from './container';
 
-import {getArticles} from './action/articleAction';
-
-import App from './component/App';
-import Home from './component/Home';
-import Article from './component/Article';
-import About from './component/About';
+import {getArticlesSuccess} from './action/articleAction';
+import {routeLocationChange} from './action/routeAction';
 
 let store = createStore(rootReducer);
+browserHistory.listen(location => store.dispatch(routeLocationChange({location: {pathname: location.pathname}})));
 
 render(
     <Provider store={store}>
-        <Router history={browserHistory}>
-            <Route path="/" component={App}>
-                <IndexRoute  component={Home}/>
-                <Route path="/article/:id" component={Article}/>
-                <Route path="/about" component={About}/>
-            </Route>
-        </Router>
+        <AppRouter/>
     </Provider>,
     document.getElementById('root')
 );
 
-store.dispatch(getArticles());
+store.dispatch(getArticlesSuccess([
+                {id: 1, name: 'article-1', title: 'Title1', body: 'Body1', excerpt: 'Kort beskrivande text...', created: new Date(), updated: new Date()},
+                {id: 2, name: 'article-2', title: 'Title2', body: 'Body2', excerpt: 'Excerpt2', created: new Date(), updated: new Date()},
+                {id: 3, name: 'article-3', title: 'Title3', body: 'Body3', excerpt: 'Excerpt3', created: new Date(), updated: new Date()}
+]));
