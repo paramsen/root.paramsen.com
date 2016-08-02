@@ -6,6 +6,11 @@ const exampleData = [
     {id: 3, name: 'article-3', title: 'Title3', body: 'Body3', excerpt: 'Excerpt3', created: new Date(), updated: new Date()}
 ];
 
-export function getArticles() {
-    return Promise.resolve(exampleData);
+export function getArticles(index, count) {
+    return fetch('/api/article')
+        .then(success => {
+            console.log(success);
+            return success;
+        })
+        .then(Promise.resolve(exampleData));
 }

@@ -17,7 +17,7 @@ const store = createStore(rootReducer, applyMiddleware(sagaMiddleware));
 
 sagaMiddleware.run(articleSaga);
 browserHistory.listen(location => store.dispatch(routeLocationChange({location: {pathname: location.pathname}})));
-store.dispatch(getArticles()); //dispatch here, we're demanding the root data
+store.dispatch(getArticles(0, 10)); //dispatch here, we're demanding the root data
 //further data should be requested when needed in a reactive manner, i.e. when onClick-action for article is clicked, dispatch getArticle(id), navigate to /article/... when GET_ARTICLE_DETAIL_SUCCESS returns.
 
 render(

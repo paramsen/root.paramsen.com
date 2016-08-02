@@ -30,6 +30,17 @@ module.exports = {
     devServer: {
         contentBase: './src',
         port: '1337',
-        historyApiFallback: true
+        historyApiFallback: true,
+        proxy: {
+            '/api/*': {
+                'target': {
+                    'host': 'localhost',
+                    'protocol': 'http:',
+                    'port': 8080
+                },
+                safe: false,
+                changeOrigin: false
+            }
+        }
     }
 }

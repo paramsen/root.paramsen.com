@@ -1,8 +1,10 @@
 import * as types from '../const';
 
-export function getArticles() {
+export function getArticles(index, count) {
     return {
-        type: types.GET_ARTICLES
+        type: types.GET_ARTICLES,
+        index,
+        count
     };
 }
 
