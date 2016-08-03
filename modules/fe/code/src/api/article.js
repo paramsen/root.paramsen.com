@@ -1,16 +1,24 @@
 import 'whatwg-fetch';
 
-const exampleData = [
-    {id: 1, name: 'article-1', title: 'Title1', body: 'Body1', excerpt: 'Kort beskrivande text...', created: new Date(), updated: new Date()},
-    {id: 2, name: 'article-2', title: 'Title2', body: 'Body2', excerpt: 'Excerpt2', created: new Date(), updated: new Date()},
-    {id: 3, name: 'article-3', title: 'Title3', body: 'Body3', excerpt: 'Excerpt3', created: new Date(), updated: new Date()}
-];
+function transform({id, title, body, excerpt, name, created, updated}) {
+    return {
+        id,
+        title,
+        body,
+        excerpt,
+        name,
+        created: new Date(created),
+        updated: new Date(updated)
+    };
+}
 
 export function getArticles(index, count) {
-    return fetch('/api/article')
-        .then(success => {
-            console.log(success);
-            return success;
+    return fetch(`/api/article?index=${index}&count=${count}`)
+        .then(response => {
+            return response.json();
         })
-        .then(Promise.resolve(exampleData));
+        .then(json => {
+            return json.article;
+        })
+        .then(articles => articles.map(transform));
 }

@@ -24,11 +24,23 @@ function insertUser {
     fi
 }
 
+function insertArticle {
+    execSql $1 "insert into Article (title, body, excerpt, created, updated) values ('$2', '$3', '$4', '$5', '$6');"
+}
+
 createArticleTable "db"
 createUserTable "db"
 insertUser "db"
+insertArticle "db" "Android stuff" "Example body" "Short describing text that adds something to the article" "2016-06-06" "2016-06-06"
+insertArticle "db" "Title" "#A post about smth
+##Cool stuff going on
+Some brödtext
+*Test" "Another short descriptive text about this article" "2016-06-07" "2016-06-07"
+insertArticle "db" "Title" "Body" "Excerpt" "2016-06-08" "2016-06-08"
+insertArticle "db" "Title" "Body" "Excerpt" "2016-07-09" "2016-07-09"
 
 createArticleTable "db-test"
 createUserTable "db-test"
+insertUser "db-test"
 
 popd

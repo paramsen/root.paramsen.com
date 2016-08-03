@@ -5,7 +5,7 @@ import * as api from '../api/article';
 import {GET_ARTICLES, GET_ARTICLE_DETAIL} from '../const';
 
 export function *getArticles(action) {
-    const articles = yield call(api.getArticles, action._from, action.count);
+    const articles = yield call(api.getArticles, action.index, action.count);
     yield put(actions.getArticlesSuccess(articles));
 }
 
