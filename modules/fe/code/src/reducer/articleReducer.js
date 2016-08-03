@@ -27,4 +27,12 @@ export function getArticles(state) {
     return [];
 }
 
+export function getArticle(state) {
+    const reducer = state.articleReducer;
+    if(reducer && reducer.article) {
+        return reducer.article;
+    }
+    return {};
+}
+
 export default reducer;

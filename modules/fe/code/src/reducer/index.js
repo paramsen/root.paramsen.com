@@ -8,3 +8,12 @@ const rootReducer = combineReducers({
 });
 
 export default rootReducer;
+
+/* sstorespec
+{
+    articles: [{id, title, body...}],
+    articlesFull: {
+        id: {title, body, all the stuff}
+    }
+}
+*/
