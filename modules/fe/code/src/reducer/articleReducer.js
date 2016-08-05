@@ -15,11 +15,22 @@ function articles(state = [], action) {
     }
 }
 
+function articleBodies(state = [], action) {
+    switch(action.type) {
+        case types.GET_ARTICLE_SUCCESS:
+            return [
+                ...state,
+                action.article.body
+            ]
+    }
+}
+
 const reducer = combineReducers({
-    articles
+    articles,
+    articleBodies
 });
 
-export function getArticles(state) {
+export function filterArticles(state) {
     const reducer = state.articleReducer;
     if(reducer && reducer.articles) {
         return reducer.articles;
@@ -27,7 +38,7 @@ export function getArticles(state) {
     return [];
 }
 
-export function getArticle(state) {
+export function filterArticle(state) {
     const reducer = state.articleReducer;
     if(reducer && reducer.article) {
         return reducer.article;

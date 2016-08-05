@@ -14,3 +14,19 @@ export function getArticlesSuccess(articles) {
         articles
     };
 }
+
+export function getArticleSuccess(article) {
+    return {
+        type: types.GET_ARTICLE_SUCCESS,
+        article
+    };
+}
+
+export function getArticle(id) {
+    return (dispatch) => {
+        dispatch({
+            type: types.GET_ARTICLE,
+            id
+        });
+    }
+}

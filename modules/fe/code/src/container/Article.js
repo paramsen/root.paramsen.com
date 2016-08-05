@@ -1,13 +1,35 @@
+import React from 'react';
 import {connect} from 'react-redux';
 import Article from '../component/Article';
-import {getArticle} from '../reducer/articleReducer';
+import {getArticle} from '../action/articleAction'
+import {filterArticle} from '../reducer/articleReducer';
 
-const mapStateToProps = state => {
+const ArticleContainer = React.createClass({
+    componentWillMount: function() {
+        this.props.getArticle(props.id);
+    },
+
+    componentWillReceiveProps(nextProps) {
+        if(nextProps.id !== this.props.id) {
+            this.props.getArticle(nextProps.id);
+        }
+    },
+
+    render: function() {
+        return(
+            <Article article={this.props.article}/>
+        );
+    }
+});
+
+const mapStateToProps = (state, ownProps) => {
+    const {articles, articleBodies} = state;
+
     return {
-        article: getArticle(state) //reducer that handles the state we want must expose method for getting the thing we want from state
+        id: ownProps.id,
+        article: articles[id],
+        articleBody: articleBodies[id]
     }
 }
 
-const ArticleContainer = connect(mapStateToProps)(Article);
-
-export default ArticleContainer;
+export default connect(mapStateToProps, getArticle)(ArticleContainer);
