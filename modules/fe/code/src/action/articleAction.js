@@ -22,11 +22,15 @@ export function getArticleSuccess(article) {
     };
 }
 
-export function getArticle(id) {
+export function getArticle() {
     return (dispatch) => {
-        dispatch({
-            type: types.GET_ARTICLE,
-            id
-        });
+        return {
+                getArticle: (name) => {
+                    dispatch({
+                        type: types.GET_ARTICLE,
+                        name
+                    });
+            }
+        }
     }
 }

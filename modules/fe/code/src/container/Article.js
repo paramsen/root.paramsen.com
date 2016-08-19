@@ -6,29 +6,35 @@ import {filterArticle} from '../reducer/articleReducer';
 
 const ArticleContainer = React.createClass({
     componentWillMount: function() {
-        this.props.getArticle(props.id);
+        console.log('componentWillMount', this.props);
+        if(!this.props.articleBody) {
+            this.props.getArticle(this.props.name);
+        }
     },
 
-    componentWillReceiveProps(nextProps) {
-        if(nextProps.id !== this.props.id) {
-            this.props.getArticle(nextProps.id);
+    componentWillReceiveProps: function(nextProps) {
+        console.log('componentWillReceiveProps', nextProps);
+        if(nextProps.name !== this.props.name) {
+            this.props.getArticle(nextProps.name);
         }
     },
 
     render: function() {
         return(
-            <Article article={this.props.article}/>
+            <Article article={this.props.article} articleBody={this.props.articleBody}/>
         );
     }
 });
 
 const mapStateToProps = (state, ownProps) => {
-    const {articles, articleBodies} = state;
+    const {articleReducer: {articles, articleBodies}} = state;
+    const {routeParams: {name}} = ownProps;
+    console.log('state', state.articleReducer);
 
     return {
-        id: ownProps.id,
-        article: articles[id],
-        articleBody: articleBodies[id]
+        name: name,
+        article: articles.find(e => e.name === name ? e : undefined),
+        articleBody: articleBodies[name]
     }
 }
 

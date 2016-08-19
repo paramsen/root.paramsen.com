@@ -23,8 +23,9 @@ export function getArticles(index, count) {
         .then(articles => articles.map(transform));
 }
 
-export function getArticle(id) {
-    return fetch(`/api/article/${id}`)
+export function getArticle(name) {
+    console.log('getArticle', name);
+    return fetch(`/api/article/${name}?type=name`)
         .then(response => {
             return response.json();
         })

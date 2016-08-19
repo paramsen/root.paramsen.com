@@ -3,11 +3,19 @@ import {Link} from 'react-router';
 import {shortFormat} from '../util/dateFormat'
 
 export default function ArticleList(props) {
-    return (
-        <div>
-            {renderArticleItems(props.articles)}
-        </div>
-    );
+    if(props.articles) {
+        return (
+            <div>
+                {renderArticleItems(props.articles)}
+            </div>
+        );
+    } else {
+        return (
+            <div>
+                Nothing to see here!
+            </div>
+        );
+    }
 }
 
 function renderArticleItems(items) {

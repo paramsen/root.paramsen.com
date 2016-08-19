@@ -3,7 +3,7 @@ import {Router, Route, IndexRoute, browserHistory} from 'react-router';
     
 import App from '../component/App';
 import Home from '../component/Home';
-import Article from '../component/Article';
+import Article from '../container/Article';
 import About from '../component/About';
 
 export default function AppRouter() {
@@ -11,7 +11,7 @@ export default function AppRouter() {
         <Router history={browserHistory}>
             <Route path="/" component={App}>
                 <IndexRoute  component={Home}/>
-                <Route path="/article/:id" component={Article}/>
+                <Route path="/article/:name" component={Article}/>
                 <Route path="/about" component={About}/>
             </Route>
         </Router>

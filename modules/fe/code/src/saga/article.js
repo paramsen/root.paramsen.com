@@ -10,8 +10,10 @@ export function *getArticles(action) {
 }
 
 export function *getArticle(action) {
-    const article = yield call(api.getArticle, action.id);
-    yield put(actions.getArticleSuccess(articles));
+    console.log('getArticle', action);
+    const article = yield call(api.getArticle, action.name);
+    console.log('getArticle article', article[0]);
+    yield put(actions.getArticleSuccess(article[0]));
 }
 
 export function *watchGetArticles() {

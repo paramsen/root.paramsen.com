@@ -15,13 +15,16 @@ function articles(state = [], action) {
     }
 }
 
-function articleBodies(state = [], action) {
+function articleBodies(state = {}, action) {
     switch(action.type) {
+        case types.GET_ARTICLE:
+            return state; //fetching and stuff (?)
         case types.GET_ARTICLE_SUCCESS:
-            return [
-                ...state,
-                action.article.body
-            ]
+            return Object.assign({}, state, {
+                [action.article.name]: action.article.body
+            });
+        default:
+            return state;
     }
 }
 
