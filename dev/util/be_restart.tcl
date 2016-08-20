@@ -2,6 +2,8 @@
 # rebuild and start be in vagrant
 # needs to be run from paramsendotcom/dev to access Vagrantfile (the bash script does this)
 
+set timeout -1
+
 spawn vagrant ssh
 expect "vagrant@*"
 send "cd /www/modules/run/dev/\r"

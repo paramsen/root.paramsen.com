@@ -3,7 +3,7 @@ import React from 'react';
 export default function Article(props) {
     if(props.article) {
         return(
-            <div>Article: {props.articleBody}</div>
+            <div dangerouslySetInnerHTML={{__html: props.articleBody}}/>
         );
     } else {
         return(
