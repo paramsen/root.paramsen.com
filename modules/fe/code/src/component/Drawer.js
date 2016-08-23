@@ -14,10 +14,15 @@ export default function DrawerComponent(props) {
             }}>
                 <p style={{
                     color: '#FFF'
-                }}>Pär Amsen</p>
+                }}>Pär Amsens blog</p>
+
+                <p style={{
+                    color: '#FFF'
+                }}>Welcome to my blog about tech, mobile and Rx.</p>
                 
             </div>
-            <MenuItem>MenuItem</MenuItem>
+            <MenuItem>Home</MenuItem>
+            <MenuItem>About</MenuItem>
         </Drawer>
     );
 }
