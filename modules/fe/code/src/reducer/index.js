@@ -1,10 +1,12 @@
 import {combineReducers} from 'redux';
 import articleReducer from './articleReducer';
 import routeReducer from './routeReducer';
+import navigationReducer from './navigationReducer';
 
 const rootReducer = combineReducers({
     routeReducer,
-    articleReducer
+    articleReducer,
+    navigationReducer
 });
 
 export default rootReducer;

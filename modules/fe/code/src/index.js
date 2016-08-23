@@ -8,6 +8,8 @@ import {browserHistory} from 'react-router';
 import createSagaMiddleware from 'redux-saga';
 import articleSaga from './saga/article';
 import AppRouter from './container';
+import injectTapEventPlugin from 'react-tap-event-plugin'; //for material-ui
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'; //material-ui theme
 
 import {routeLocationChange} from './action/routeAction';
 import {getArticles} from './action/articleAction';
@@ -20,9 +22,13 @@ browserHistory.listen(location => store.dispatch(routeLocationChange({location: 
 store.dispatch(getArticles(0, 10)); //dispatch here, we're demanding the root data
 //further data should be requested when needed in a reactive manner, i.e. when onClick-action for article is clicked, dispatch getArticle(id), navigate to /article/... when GET_ARTICLE_DETAIL_SUCCESS returns.
 
+injectTapEventPlugin();
+
 render(
     <Provider store={store}>
-        <AppRouter/>
+        <MuiThemeProvider>
+            <AppRouter/>
+        </MuiThemeProvider>
     </Provider>,
     document.getElementById('root')
 );
