@@ -12,6 +12,9 @@ export default function DrawerComponent(props) {
                 backgroundColor: '#454545',
                 height: 200
             }}>
+                <div>
+                    Image or smth
+                </div>
                 <p style={{
                     color: '#FFF'
                 }}>Pär Amsens blog</p>
