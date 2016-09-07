@@ -2,6 +2,7 @@ import React from 'react';
 import Drawer from 'material-ui/Drawer';
 import {colors} from 'material-ui/styles';
 import MenuItem from 'material-ui/MenuItem';
+import {Link} from 'react-router';
 
 export default function DrawerComponent(props) {
     return (
@@ -24,8 +25,9 @@ export default function DrawerComponent(props) {
                 }}>Welcome to my blog about tech, mobile and Rx.</p>
                 
             </div>
-            <MenuItem>Home</MenuItem>
-            <MenuItem>About</MenuItem>
+
+            <Link to="/"><MenuItem onClick={props.onToggleDrawerClick}>Home</MenuItem></Link>
+            <Link to="/about"><MenuItem onClick={props.onToggleDrawerClick}>About</MenuItem></Link>
         </Drawer>
     );
 }
