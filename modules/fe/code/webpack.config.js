@@ -1,4 +1,4 @@
-var webpack = require("webpack");
+var webpack = require('webpack');
 var path = require('path');
 
 module.exports = {
@@ -15,6 +15,7 @@ module.exports = {
             new webpack.HotModuleReplacementPlugin(),
             new webpack.optimize.OccurenceOrderPlugin()/*,
             new webpack.optimize.UglifyJsPlugin()*/
+
     ],
     module: {
         loaders: [ //loaders transform EACH file, usable as pre or post processors

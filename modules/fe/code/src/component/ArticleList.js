@@ -1,6 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router';
 import {shortFormat} from '../util/dateFormat'
+import {Card, CardMedia, CardTitle, CardText} from 'material-ui/Card'
 
 export default function ArticleList(props) {
     if(props.articles) {
@@ -19,7 +20,7 @@ export default function ArticleList(props) {
 }
 
 function renderArticleItems(items) {
-    return items.map(renderArticleItem);
+    return items.map(renderArticleItemM);
 }
 
 function renderArticleItem(item) {
@@ -37,5 +38,25 @@ function renderArticleItem(item) {
             </p>
             <p>{shortFormat(item.updated)}</p>
         </div>
+    );
+}
+
+    function renderArticleItemM(item) {
+    return(
+        <Link to={'/article/' + item.name} key={item.id}>
+          <Card className="card">
+            <CardMedia className="card-media">
+                <i className="card-icon fa fa-terminal" aria-hidden="true"></i>
+            </CardMedia>
+            <CardTitle
+              title={item.title}
+            />
+            <CardText>
+              {item.excerpt}
+
+            <p className="card-time">{shortFormat(item.updated)}</p>
+            </CardText>
+          </Card>
+      </Link>
     );
 }
