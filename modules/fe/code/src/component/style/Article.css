@@ -1,0 +1,19 @@
+.article-container {
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+    background-color: white;
+    border-bottom: 1px solid #DFDFDF;
+    padding: 16px;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 24px;
+}
+
+.article-container h1 {
+    font-size: 36px;
+}
+
+.article-container .time {
+    color: #000;
+    opacity: .54;
+}
+

@@ -16,9 +16,6 @@ export default function DrawerComponent(props) {
                 <div>
                     Image or smth
                 </div>
-                <p style={{
-                    color: '#FFF'
-                }}>Pär Amsens blog</p>
 
                 <p style={{
                     color: '#FFF'
