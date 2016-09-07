@@ -11,7 +11,13 @@ a {
     text-decoration: none;
 }
 
+.article-list {
+    display: flex;
+    flex-flow: row wrap;
+}
+
 .card {
+    flex: 1 100%;
     margin: 16px;
 }
 
@@ -31,4 +37,26 @@ a {
     color: #000;
     opacity: .25;
     font-size: 100px;
+}
+
+/* Medium screens */
+@media all and (min-width: 600px) {
+    .card {
+        flex: 1 50%;
+        margin: 16px;
+    }
+}
+
+/* Large screens */
+@media all and (min-width: 800px) {
+    .article-list {
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: flex-start;
+    }
+
+    .card {
+        flex: 1 31%;
+        margin: 12px;
+    }
 }
