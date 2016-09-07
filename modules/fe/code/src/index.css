@@ -1,0 +1,32 @@
+html {
+    font-family: 'Roboto', sans-serif;
+    background-color: #FAFAFA;
+}
+
+a {
+    text-decoration: none;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: block;
+}
+
+/* Medium screens */
+@media all and (min-width: 600px) {
+    .container {
+        max-width: 1400px;
+        margin: 16px auto 0 auto;
+        display: block;
+    }
+}
+
+/* Large screens */
+@media all and (min-width: 1000px) {
+    .container {
+        max-width: 1400px;
+        margin: 16px auto 0 auto;
+        display: block;
+    }
+}

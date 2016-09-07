@@ -9,7 +9,7 @@ import createSagaMiddleware from 'redux-saga';
 import articleSaga from './saga/article';
 import AppRouter from './container';
 import injectTapEventPlugin from 'react-tap-event-plugin'; //for material-ui
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'; //material-ui theme
+import './index.css';
 
 import {routeLocationChange} from './action/routeAction';
 import {getArticles} from './action/articleAction';
@@ -26,9 +26,7 @@ injectTapEventPlugin();
 
 render(
     <Provider store={store}>
-        <MuiThemeProvider>
             <AppRouter/>
-        </MuiThemeProvider>
     </Provider>,
     document.getElementById('root')
 );

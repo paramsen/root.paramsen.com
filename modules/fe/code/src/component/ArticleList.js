@@ -2,6 +2,7 @@ import React from 'react';
 import {Link} from 'react-router';
 import {shortFormat} from '../util/dateFormat'
 import {Card, CardMedia, CardTitle, CardText} from 'material-ui/Card'
+import './style/ArticleList.css';
 
 export default function ArticleList(props) {
     if(props.articles) {

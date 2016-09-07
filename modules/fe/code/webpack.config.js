@@ -1,5 +1,6 @@
 var webpack = require('webpack');
 var path = require('path');
+var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = {
     entry: [
@@ -13,7 +14,12 @@ module.exports = {
     },
     plugins: [ //plugins (can) work on the entire bundle, in contrast to loaders (difference not clear imho)
             new webpack.HotModuleReplacementPlugin(),
-            new webpack.optimize.OccurenceOrderPlugin()/*,
+            new webpack.optimize.OccurenceOrderPlugin(),
+            new ExtractTextPlugin("app.bundle.css", {
+                allChunks: true
+            })
+
+            /*,
             new webpack.optimize.UglifyJsPlugin()*/
 
     ],
@@ -24,6 +30,10 @@ module.exports = {
                 loaders: ['babel'], //processor
                 exclude: /node-modules/,
                 include: path.join(__dirname, 'src')
+            },
+            {
+                test: /\.css$/,
+                loader: ExtractTextPlugin.extract("style-loader", "css-loader")
             }
         ]
     },
