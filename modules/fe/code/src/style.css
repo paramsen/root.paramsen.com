@@ -16,7 +16,7 @@ a {
     flex-flow: row wrap;
 }
 
-.card {
+.card-wrapper {
     flex: 1 100%;
     margin: 16px;
 }
@@ -41,9 +41,13 @@ a {
 
 /* Medium screens */
 @media all and (min-width: 600px) {
-    .card {
+    .card-wrapper {
         flex: 1 50%;
         margin: 16px;
+    }
+
+    .card {
+        height: 100%;
     }
 }
 
@@ -53,10 +57,15 @@ a {
         display: flex;
         flex-flow: row wrap;
         justify-content: flex-start;
+        align-items: stretch;
+    }
+
+    .card-wrapper {
+        flex: 1 31%;
+        margin: 12px;
     }
 
     .card {
-        flex: 1 31%;
-        margin: 12px;
+        height: 100%;
     }
 }

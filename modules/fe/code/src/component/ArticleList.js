@@ -43,8 +43,8 @@ function renderArticleItem(item) {
 
     function renderArticleItemM(item) {
     return(
-        <Link to={'/article/' + item.name} key={item.id} className="card">
-          <Card>
+        <Link to={'/article/' + item.name} key={item.id} className="card-wrapper">
+          <Card className="card">
             <CardMedia className="card-media">
                 <i className="card-icon fa fa-terminal" aria-hidden="true"></i>
             </CardMedia>
@@ -72,10 +72,10 @@ function fillToMultipleOfThree(items) {
     }
 
     if(multOfThree == 1) {
-        items.push(cardFill(items.length));
-        items.push(cardFill(items.length));
+        items.push(cardFill(++items.length));
+        items.push(cardFill(++items.length));
     } else {
-        items.push(cardFill(items.length));
+        items.push(cardFill(++items.length));
     }
 
     return items;
@@ -83,6 +83,6 @@ function fillToMultipleOfThree(items) {
 
 function cardFill(id) {
     return (
-        <div key={items.length+1} className="card card-fill"/>
+        <div key={id} className="card-wrapper card-fill"/>
     );
 }
