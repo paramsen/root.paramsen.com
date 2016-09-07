@@ -31,6 +31,7 @@ module.exports = {
     devServer: {
         contentBase: './src',
         port: '1337',
+        host: '0.0.0.0',
         historyApiFallback: true,
         proxy: {
             '/api/*': {
