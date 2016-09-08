@@ -9,7 +9,7 @@ export default function AppBarImpl(props) {
                 title={
                     <Link to="/">
                         <div>
-                            <span className="title">Pär Amsens Sandbox</span><i className="fa fa-thumbs-up icon" aria-hidden="true"/>
+                            <span className="title">Pär Amsen Codes</span><i className="fa fa-thumbs-up icon" aria-hidden="true"/>
                         </div>
                     </Link>}
                 onLeftIconButtonTouchTap={props.onToggleDrawerClick}>
