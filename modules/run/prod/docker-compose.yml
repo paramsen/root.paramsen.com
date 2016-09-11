@@ -22,7 +22,9 @@ services:
   db: 
     image: mysql:latest
     restart: always
-    volumes: '/www/db:/var/lib/mysql'
+    volumes: 
+      - '/www/db:/var/lib/mysql'
+      - '../../db/prod:/docker-entrypoint-initdb.d'
     environment:
       MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
       MYSQL_DATABASE: $MYSQL_DATABASE
