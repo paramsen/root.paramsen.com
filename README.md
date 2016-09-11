@@ -19,10 +19,10 @@
 ## Prod
 Currenct manual steps:  
 * Conf. server
-    * Setup non-privileged user
     * install docker
     * install docker-compose
-    * Setup non-privileged docker runner user
+    * Setup non-privileged docker user, to not run docker with sudo in prod 
+    * create /www/db and /www/public folders, grant docker user read permission
     * conf firewall redirect 80->8080
 * Git clone this
 * Add env vars to satisfy ./modules/run/prod/docker-compose.yml
