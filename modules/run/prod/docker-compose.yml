@@ -3,12 +3,18 @@ version: '2'
 services:
   be:
     extends:
-      file: ../be/docker/docker-compose.yml
+      file: ../../be/docker/docker-compose.yml
       service: be
     volumes:
-      - '/www/public:/www/public'
+      - '/www/public:/www/public:ro'
     environment:
-      - NODE_ENV=$NODE_ENV
+      NODE_ENV: $NODE_ENV
+      SESSION_SECRET: $SESSION_SECRET
+      DB_HOST: $DB_HOST
+      DB_NAME: $DB_NAME
+      DB_USER: $DB_USER
+      DB_PW: $DB_PW
+
     restart: always
     depends_on: 
       - db
@@ -16,17 +22,19 @@ services:
   db: 
     image: mysql:latest
     restart: always
+    volumes: '/www/db:/var/lib/mysql'
     environment:
-      - MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
-      - MYSQL_DATABASE=$MYSQL_DATABASE
-      - MYSQL_USER=$MYSQL_USER
-      - MYSQL_PASSWORD=$MYSQL_PASSWORD
+      MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
+      MYSQL_DATABASE: $MYSQL_DATABASE
+      MYSQL_USER: $MYSQL_USER
+      MYSQL_PASSWORD: $MYSQL_PASSWORD
 
   nginx:
     image: nginx:latest
     restart: always
     volumes:
-      - '../nginx:/etc/nginx:ro'
+      - '../../nginx:/etc/nginx:ro'
+      - '/www/public:/www/public:ro'
     ports:
       - '80:80'
     depends_on: 
