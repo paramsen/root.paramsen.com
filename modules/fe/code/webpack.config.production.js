@@ -18,7 +18,12 @@ module.exports = {
             }),
             new webpack.optimize.DedupePlugin(),
             new webpack.optimize.UglifyJsPlugin(),
-            new webpack.optimize.AggressiveMergingPlugin()
+            new webpack.optimize.AggressiveMergingPlugin(),
+            new webpack.DefinePlugin({
+                'process.env': {
+                    'NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+                }
+            })
     ],
     module: {
         loaders: [ //loaders transform EACH file, usable as pre or post processors
