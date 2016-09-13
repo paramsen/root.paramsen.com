@@ -4,7 +4,6 @@ var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = {
     entry: [
-        'webpack-hot-middleware/client',
         './src/index.js'
     ],
     output: {
@@ -13,11 +12,13 @@ module.exports = {
         publicPath: '/' //used to generate public paths to images & stuff
     },
     plugins: [ //plugins (can) work on the entire bundle, in contrast to loaders (difference not clear imho)
-            new webpack.HotModuleReplacementPlugin(),
             new webpack.optimize.OccurenceOrderPlugin(),
             new ExtractTextPlugin("app.bundle.css", {
                 allChunks: true
             }),
+            new webpack.optimize.DedupePlugin(),
+            new webpack.optimize.UglifyJsPlugin(),
+            new webpack.optimize.AggressiveMergingPlugin()
     ],
     module: {
         loaders: [ //loaders transform EACH file, usable as pre or post processors
@@ -32,23 +33,5 @@ module.exports = {
                 loader: ExtractTextPlugin.extract("style-loader", "css-loader")
             }
         ]
-    },
-    devtool: 'cheap-module-eval-source-map',
-    devServer: {
-        contentBase: './src',
-        port: '1337',
-        host: '0.0.0.0',
-        historyApiFallback: true,
-        proxy: {
-            '/api/*': {
-                'target': {
-                    'host': 'localhost',
-                    'protocol': 'http:',
-                    'port': 8080
-                },
-                safe: false,
-                changeOrigin: false
-            }
-        }
     }
 }
