@@ -1,5 +1,7 @@
 #!/bin/sh
 
+rm build/*
+
 npm run build
 
-cp src/index.html src/reset.css static/* build
+cp src/index.html static/* build
