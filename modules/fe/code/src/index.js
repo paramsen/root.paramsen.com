@@ -9,6 +9,7 @@ import createSagaMiddleware from 'redux-saga';
 import articleSaga from './saga/article';
 import AppRouter from './container';
 import injectTapEventPlugin from 'react-tap-event-plugin'; //for material-ui
+import './reset.css';
 import './index.css';
 
 import {routeLocationChange} from './action/routeAction';
