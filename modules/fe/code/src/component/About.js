@@ -1,9 +1,16 @@
 import React from 'react';
+import Helmet from "react-helmet";
+
 import './style/Article.css';
 
 export default function About() {
     return(
         <div className="article-container">
+            <Helmet 
+                title="About"
+                meta={[
+                    {"name": "description", "content": "Nothing to see here folks! 👮"}
+                ]}/>
             <h1>About</h1>
             <br/>
             <p>This is my blog where I will most probably write about hacking stuff and writing better code. I usually work in Android [Java8], JavaScript and Reactive [RxJava, RxAndroid, React].</p>

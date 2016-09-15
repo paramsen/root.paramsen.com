@@ -1,5 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import Helmet from "react-helmet";
+
 import Article from '../component/Article';
 import {getArticle} from '../action/articleAction'
 import {filterArticle} from '../reducer/articleReducer';
@@ -21,7 +23,14 @@ const ArticleContainer = React.createClass({
 
     render: function() {
         return(
-            <Article article={this.props.article} articleBody={this.props.articleBody}/>
+            <div>
+                <Helmet 
+                    title={this.props.article.title}
+                    meta={[
+                        {"name": "description", "content": this.props.article.excerpt}
+                    ]}/>
+                <Article article={this.props.article} articleBody={this.props.articleBody}/>
+            </div>
         );
     }
 });

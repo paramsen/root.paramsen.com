@@ -1,5 +1,6 @@
 import React from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import Helmet from "react-helmet";
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import {
   purple500, purple700, grey400, //primary
@@ -22,9 +23,17 @@ const muiTheme = {
 export default React.createClass({
     render() {
         return(
-                <MuiThemeProvider muiTheme={getMuiTheme(muiTheme)}>
-                    <div>
+            <MuiThemeProvider muiTheme={getMuiTheme(muiTheme)}>
+                <div>
+                    <Helmet 
+                        defaultTitle="Pär Amsen Codes"
+                        titleTemplate="%s ~> Pär Amsen Codes"
+                        meta={[
+                            {"name": "description", "content": "Where some awesome code and cool stuff hang out 🤓🤓"}
+                        ]}/>
+
                     <Header/>
+
                     <div className="container">
                         {this.props.children}
                     </div>
