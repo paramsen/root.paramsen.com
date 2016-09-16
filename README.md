@@ -1,6 +1,7 @@
 # Complete platform for http://paramsen.com
-_A modern Material Design CMS, React.js frontend, Node.js/Express backend & Dockerized platform for continous delivery_  
-Meant to run on a single Virtual Server [in my case Linode, 10$/month] with Docker.
+_A modern Material Design CMS with a Dockerized platform for continous delivery_  
+Meant to run on a single Virtual Server for least expense, in my case on Linode for 10$/month 🤓.  
+Schematic over system will go here soon enough 🤓
 
 ## Prerequirities
 - vagrant
@@ -12,7 +13,7 @@ Meant to run on a single Virtual Server [in my case Linode, 10$/month] with Dock
     ~> cd <directory of cloned>
     ~> git submodule update --init --recursive # This repo is separated into 3 git submodules, this, [be][], [fe][]
 
-## Dev: First start instructions
+## Run local [dev]: First start instructions
     ~> cd ./dev  
     ~> vagrant up  
     #Wait until it is up & running, open new terminal
@@ -23,7 +24,7 @@ Meant to run on a single Virtual Server [in my case Linode, 10$/month] with Dock
     ~> cd modules/fe/src && npm start  
     open browser -> browse to http://localhost:1337
 
-## Prod
+## Run on server [production]
 Currenct manual steps until Ansible:  
 * Conf. server
     * install docker
