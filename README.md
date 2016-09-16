@@ -1,6 +1,7 @@
 # Complete platform for http://paramsen.com
 _A modern Material Design CMS with a Dockerized platform for continous delivery_  
 Meant to run on a single Virtual Server for least expense, in my case on Linode for 10$/month 🤓.  
+Development environment contained in a Vagrant box [VirtualBox]  
 Schematic over system will go here soon enough 🤓
 
 ## Prerequirities
