@@ -1,0 +1,4 @@
+[submodule "modules/be"]
+	path = modules/be
+	url = git@github.com:paramsen/be.paramsen.com.git
+	branch = develop
