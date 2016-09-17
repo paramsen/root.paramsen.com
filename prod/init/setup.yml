@@ -1,0 +1,13 @@
+---
+- hosts: [paramsendotcomserver]
+  remote_user: root
+  vars:
+      ADMIN_USER_NAME: {{ lookup('ini', 'user file=private.ini') }}
+  tasks:
+      - name: "Create unprivileged user"
+        user: name={{ ADMIN_USER_NAME }}
+        password: $6$VFYPkS12p62$EBaV10N9aL3mqv2uYhjKCXrKIKFAXPo7mtuxOdDfa6xO7OVEWUKVacmSGEAUW4krZoT4zQrGujO3RRy9Dqzu60 
+        shell=/bin/bash
+      - name: "Copy private key for ssh login"
+        authorized_key: user={{ ADMIN_USER_NAME }} key=""
+
