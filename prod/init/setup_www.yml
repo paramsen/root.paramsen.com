@@ -4,3 +4,8 @@
 # pull git repo
 # apply correct ownership to /www
 # copy env.sh
+
+- hosts: paramsendotcom
+  vars_files:
+      - vars/private_user.yml
+      - vars/private_server.yml
