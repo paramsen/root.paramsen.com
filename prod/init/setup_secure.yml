@@ -1,0 +1,45 @@
+---
+- hosts: paramsendotcom
+  vars_files:
+      - vars/private_user.yml
+      - vars/apt_packages.yml
+  tasks:
+      - name: "Create unprivileged deploy user, add to sudo group for privilege escalation"
+        user: name={{ deploy_user }}
+            password={{ deploy_user_password_hash }}
+            groups=sudo
+            shell=/bin/bash
+            
+      - name: "Copy private key for ssh login"
+        authorized_key: user={{ deploy_user }} key="{{ lookup('file', '{{ deploy_ssh_key_path }}') }}"
+
+      - name: "Disable root user login"
+        lineinfile: dest=/etc/ssh/sshd_config
+            regexp="^PermitRootLogin.*"
+            line="PermitRootLogin no"
+            state=persist
+        notify: "Restart ssh"
+
+      - name: "Disable password login"
+        lineinfile: dest=/etc/ssh/sshd_config
+          regexp="^PasswordAuthentication.*"
+          line="PasswordAuthentication no"
+          state=persist
+        notify: "Restart ssh"
+
+      - name: "Install security packages"
+        apt: state=installed pkg={{ item }}
+        with_items: apt_security_packages
+
+      - name: "Set apt periodic security updates"
+        copy: src=files/apt_periodic.conf dest=/etc/apt/apt.conf.d/10periodic
+
+      - name: "Setup ufw"
+        ufw: state=enabled policy=deny
+
+      - name: "Set ufw to allow ssh"
+        ufw: rule=allow port=22 proto=tcp
+        
+  handlers: 
+    - name: "Restart ssh"
+      service: name=ssh state=restarted

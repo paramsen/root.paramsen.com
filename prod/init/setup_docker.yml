@@ -1,0 +1,53 @@
+---
+- hosts: paramsendotcom
+  vars_files:
+      - vars/private_user.yml
+      - vars/private_server.yml
+  tasks: 
+    - name: "Install prerequiries"
+      apt: state=installed pkg={{ item }}
+      with_items: 
+        - apt-transport-https
+        - ca-certificates
+
+    - name: "Install Docker apt key"
+      apt_key: keyserver=hkp://p80.pool.sks-keyservers.net:80 id=58118E89F3A912897C070ADBF76221572C52609D
+
+    - name: "Add Docker repository"
+      lineinfile: dest=/etc/apt/sources.list.d/docker.list
+        line="deb https://apt.dockerproject.org/repo ubuntu-trusty main"
+        state=persist
+
+    - name: "Update apt package index"
+      apt: update_cache=yes
+
+    - name: "Update apt cache"
+      command: /usr/bin/apt-cache policy docker-engine
+
+    - name: "Install linux virtualization packages"
+      apt: state=installed pkg={{ item }}
+      with_items: 
+        - linux-image-extra-4.4.0-36-generic
+        - linux-image-extra-virtual
+
+    - name: "Install Docker"
+      apt: state=installed pkg=docker-engine
+
+    - name: "Start Docker service"
+      service: name=docker state=started enabled=yes
+
+    - name: "Add docker group"
+      group: name=docker
+
+    - name: "ufw forwarding"
+      lineinfile: dest=/etc/default/ufw
+        regexp="^DEFAULT_FORWARD_POLICY.*"
+        line=DEFAULT_FORWARD_POLICY="ACCEPT"
+      notify: "Restart ufw"
+
+    - name: "ufw allow port 2375"
+      ufw: rule=allow port=2375 proto=tcp
+
+  handlers:
+    - name: "Restart ufw"
+      service: name=ufw state=restarted

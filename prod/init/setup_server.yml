@@ -1,0 +1,27 @@
+---
+- hosts: paramsendotcom
+  vars_files:
+      - vars/private_user.yml
+      - vars/private_server.yml
+      - vars/apt_packages.yml
+  tasks:
+      - name: "Set timezone to UTC"
+        command: ln -fs /usr/share/zoneinfo/UTC /etc/localtime
+
+      - name: "set hostname"
+        hostname: name={{ host_name }}
+
+      - name: "Build hosts file"
+        lineinfile: dest=/etc/hosts 
+            regexp='.*{{ item }}$'
+            line="{{ hostvars[item].ansible_default_ipv4.address }} {{item}}"
+            state=present
+        when: hostvars[item].ansible_default_ipv4.address is defined
+        with_items: groups['paramsendotcom']
+
+      - name: "Update packages"
+        apt: update_cache=yes cache_valid_time=3600 upgrade=safe
+
+      - name: "Install common packages"
+        apt: state=installed pkg={{ item }}
+        with_items: apt_common_packages

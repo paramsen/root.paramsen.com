@@ -1,0 +1,6 @@
+# setup www user
+# sudo usermod -aG docker $USER
+# setup /www hierarchy
+# pull git repo
+# apply correct ownership to /www
+# copy env.sh

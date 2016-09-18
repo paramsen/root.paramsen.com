@@ -1,0 +1,8 @@
+---
+apt_security_packages:
+  - unattended-upgrades
+  - ufw
+  - fail2ban
+
+apt_common_packages:
+  - vim
