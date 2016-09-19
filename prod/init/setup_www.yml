@@ -21,7 +21,7 @@
       with_items: 
         - "/www"
         - "/www/public"
-        - "www/db"
+        - "/www/db"
 
     - name: "ensure github.com is a known host"
       lineinfile: dest=/root/.ssh/known_hosts
@@ -30,11 +30,15 @@
         regexp="^github\\.com"
 
     - name: "Pull paramsendotcom git repo"
-      git: repo=git@github.com:paramsen/root.paramsen.com.git
+      git: repo=https://github.com/paramsen/root.paramsen.com.git
         dest=/www/paramsendotcom
         accept_hostkey=yes
 
     - name: "Permission /www"
-      file: state=path owner=deploy group=www mode=g+r
+      file: path=/www state=directory owner=deploy group=www mode=g+r recurse=yes
 
-# copy env.sh
+    - name: "Permission /www/db"
+      file: path=/www/db state=directory owner=deploy group=www mode=g+rw recurse=yes
+
+    - name: "Copy environment variables"
+      copy: src=files/private_env.sh dest=/etc/profile.d/env.sh
