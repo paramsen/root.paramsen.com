@@ -6,7 +6,7 @@
       - vars/apt_packages.yml
   tasks:
       - name: "Set timezone to UTC"
-        command: ln -fs /usr/share/zoneinfo/UTC /etc/localtime
+        file: src=/usr/share/zoneinfo/UTC dest=/etc/localtime state=link force=yes 
 
       - name: "set hostname"
         hostname: name={{ host_name }}
@@ -17,11 +17,11 @@
             line="{{ hostvars[item].ansible_default_ipv4.address }} {{item}}"
             state=present
         when: hostvars[item].ansible_default_ipv4.address is defined
-        with_items: groups['paramsendotcom']
+        with_items: "{{ groups['paramsendotcom'] }}"
 
       - name: "Update packages"
         apt: update_cache=yes cache_valid_time=3600 upgrade=safe
 
       - name: "Install common packages"
         apt: state=installed pkg={{ item }}
-        with_items: apt_common_packages
+        with_items: "{{ apt_common_packages }}"
