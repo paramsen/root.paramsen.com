@@ -26,3 +26,22 @@
 
       - name: "Set ufw to allow ssh"
         ufw: rule=allow port=22 proto=tcp
+
+      - name: "Set ufw to allow 8080"
+        ufw: rule=allow port=8080 proto=tcp
+
+      - name: "Set ufw to port forward 80 -> 8080"
+        blockinfile:
+          dest: /etc/ufw/before.rules
+          marker: "# {mark} ANSIBLE MANAGED BLOCK"
+          insertbefore: "^\\*filter$"
+          block: |
+            *nat
+            :PREROUTING ACCEPT [0:0]
+            -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 8080
+            COMMIT
+        notify: "Restart ufw"
+
+  handlers:
+    - name: "Restart ufw"
+      service: name=ufw state=restarted

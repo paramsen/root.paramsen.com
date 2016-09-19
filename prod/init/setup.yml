@@ -5,4 +5,4 @@
 - include: setup_node.yml
 - include: setup_www.yml
 #- include: deploy.yml
-# - include: setup_lockdown_ssh.yml
+- include: setup_lockdown_ssh.yml

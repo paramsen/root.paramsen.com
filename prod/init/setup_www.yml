@@ -33,12 +33,26 @@
       git: repo=https://github.com/paramsen/root.paramsen.com.git
         dest=/www/paramsendotcom
         accept_hostkey=yes
+        update=no
 
     - name: "Permission /www"
       file: path=/www state=directory owner=deploy group=www mode=g+r recurse=yes
 
     - name: "Permission /www/db"
       file: path=/www/db state=directory owner=deploy group=www mode=g+rw recurse=yes
+
+    - name: "Permission /www/paramsendotcom/.../fe/code script execution"
+      file: path=/www/paramsendotcom/modules/fe/code/{{ item }} state=touch owner=deploy group=www mode=u+x
+      with_items: 
+        - init.sh
+        - build.sh
+
+    - name: "Init fe module npm dependencies"
+      shell: ./init.sh
+        chdir=/www/paramsendotcom/modules/fe/code 
+        creates=./node_modules
+      become: true
+      become_user: deploy
 
     - name: "Copy environment variables"
       copy: src=files/private_env.sh dest=/etc/profile.d/env.sh

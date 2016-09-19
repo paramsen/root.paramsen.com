@@ -1,0 +1,16 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# Test environment for Ansible provisioning scripts. Reached on localhost:2222 and should be added to ansible inventory for testing
+
+Vagrant.configure("2") do |config|
+  config.vm.box = 'ubuntu/trusty64'
+  config.vm.network 'forwarded_port', guest: 80, host: 8080
+
+  config.vm.provision 'shell', keep_color: true, name: 'shell:provision',  inline: <<-SHELL
+    echo root:root | chpasswd
+    sed -i -- 's/PermitRootLogin.*/PermitRootLogin yes/g' /etc/ssh/sshd_config
+    service ssh restart
+    SHELL
+end
+
