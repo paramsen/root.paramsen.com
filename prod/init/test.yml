@@ -1,0 +1,10 @@
+---
+- hosts: paramsendotcom
+  vars_files:
+      - vars/private_user.yml
+      - vars/apt_packages.yml
+  tasks: 
+    - name: "Test"
+      shell: touch ~/ansible_says_hello
+      args: 
+        creates: ~/ansible_says_hello

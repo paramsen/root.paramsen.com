@@ -1,11 +1,40 @@
-# setup www user
-# sudo usermod -aG docker $USER
-# setup /www hierarchy
-# pull git repo
-# apply correct ownership to /www
-# copy env.sh
-
+---
 - hosts: paramsendotcom
   vars_files:
       - vars/private_user.yml
-      - vars/private_server.yml
+  remote_user: root
+  tasks: 
+    - name: "Add www user"
+      user: name=www
+        password={{ www_password_hash }}
+        groups=docker
+        shell=/bin/bash
+
+    - name: "Add deploy user to www group"
+      user: name=deploy append=yes groups=www
+
+    - name: "Copy private key for ssh login"
+      authorized_key: user=deploy key="{{ lookup('file', '{{ www_ssh_key_path }}') }}"
+
+    - name: "Create /www folder tree"
+      file: path={{ item }} state=directory
+      with_items: 
+        - "/www"
+        - "/www/public"
+        - "www/db"
+
+    - name: "ensure github.com is a known host"
+      lineinfile: dest=/root/.ssh/known_hosts
+        state=present
+        line="{{ lookup('pipe', 'ssh-keyscan -t rsa github.com') }}"
+        regexp="^github\\.com"
+
+    - name: "Pull paramsendotcom git repo"
+      git: repo=git@github.com:paramsen/root.paramsen.com.git
+        dest=/www/paramsendotcom
+        accept_hostkey=yes
+
+    - name: "Permission /www"
+      file: state=path owner=deploy group=www mode=g+r
+
+# copy env.sh

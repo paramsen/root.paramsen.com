@@ -1,8 +1,8 @@
 [submodule "modules/be"]
-	path = modules/be
-	url = git@github.com:paramsen/be.paramsen.com.git
-	branch = develop
+        path = modules/be
+        url = https://github.com/paramsen/be.paramsen.com.git
+        branch = develop
 [submodule "modules/fe"]
-	path = modules/fe
-	url = git@github.com:paramsen/fe.paramsen.com.git
-	branch = develop
+        path = modules/fe
+        url = https://github.com/paramsen/fe.paramsen.com.git
+        branch = develop

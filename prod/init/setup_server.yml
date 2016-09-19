@@ -1,9 +1,9 @@
 ---
 - hosts: paramsendotcom
   vars_files:
-      - vars/private_user.yml
       - vars/private_server.yml
       - vars/apt_packages.yml
+  remote_user: root
   tasks:
       - name: "Set timezone to UTC"
         file: src=/usr/share/zoneinfo/UTC dest=/etc/localtime state=link force=yes 
