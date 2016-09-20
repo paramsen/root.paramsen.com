@@ -1,6 +1,7 @@
 ---
 - hosts: paramsendotcom
-  remote_user: root
+  remote_user: deploy
+  become: true
   tasks:
       - name: "Disable root user login"
         lineinfile: dest=/etc/ssh/sshd_config

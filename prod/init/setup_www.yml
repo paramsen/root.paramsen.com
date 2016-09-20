@@ -28,6 +28,7 @@
         state=present
         line="{{ lookup('pipe', 'ssh-keyscan -t rsa github.com') }}"
         regexp="^github\\.com"
+        create=yes
 
     - name: "Pull paramsendotcom git repo"
       git: repo=https://github.com/paramsen/root.paramsen.com.git

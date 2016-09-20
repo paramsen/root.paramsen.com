@@ -1,23 +1,21 @@
 ---
 - hosts: paramsendotcom
-  remote_user: root
+  remote_user: deploy
   tasks:
     - name: "Pull repo"
       git: repo=https://github.com/paramsen/root.paramsen.com.git
         dest=/www/paramsendotcom
         accept_hostkey=yes
         force=yes
-      become: true
-      become_user: deploy
 
     - name: "Stop docker containers"
-      command: docker-compose stop
+      shell: docker-compose stop
         chdir=/www/paramsendotcom/modules/run/prod
       become: true
       become_user: www
 
     - name: "Rebuild & run docker containers"
-      command: docker-compose up --build -d
+      shell: docker-compose up --build -d
         chdir=/www/paramsendotcom/modules/run/prod
       become: true
       become_user: www

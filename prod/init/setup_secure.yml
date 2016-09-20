@@ -1,46 +1,55 @@
 ---
 - hosts: paramsendotcom
   vars_files:
-      - vars/private_user.yml
-      - vars/apt_packages.yml
+    - vars/private_user.yml
+    - vars/apt_packages.yml
   remote_user: root
   tasks:
-      - name: "Create unprivileged deploy user, add to sudo group for privilege escalation"
-        user: name=deploy
-            password={{ deploy_password_hash }}
-            groups=sudo
-            shell=/bin/bash
+    - name: "Create unprivileged deploy user, add to sudo group for privilege escalation"
+      user: name=deploy
+        password={{ deploy_password_hash }}
+        groups=sudo
+        shell=/bin/bash
             
-      - name: "Copy private key for ssh login"
-        authorized_key: user=deploy key="{{ lookup('file', '{{ deploy_ssh_key_path }}') }}"
+    - name: "Copy private key for ssh login"
+      authorized_key: user=deploy key="{{ lookup('file', '{{ deploy_ssh_key_path }}') }}"
 
-      - name: "Install security packages"
-        apt: state=installed pkg={{ item }}
-        with_items: "{{ apt_security_packages }}"
+    - name: "Install security packages"
+      apt: state=installed pkg={{ item }}
+      with_items: "{{ apt_security_packages }}"
 
-      - name: "Set apt periodic security updates"
-        copy: src=files/apt_periodic.conf dest=/etc/apt/apt.conf.d/10periodic
+    - name: "Set apt periodic security updates"
+      copy: src=files/apt_periodic.conf dest=/etc/apt/apt.conf.d/10periodic
 
-      - name: "Setup ufw"
-        ufw: state=enabled policy=deny
+    - name: "Setup ufw"
+      ufw: state=enabled policy=deny
 
-      - name: "Set ufw to allow ssh"
-        ufw: rule=allow port=22 proto=tcp
+    - name: "Set ufw to allow ssh"
+      ufw: rule=allow port=22 proto=tcp
 
-      - name: "Set ufw to allow 8080"
-        ufw: rule=allow port=8080 proto=tcp
+    - name: "Set ufw to allow 8080"
+      ufw: rule=allow port=8080 proto=tcp
 
-      - name: "Set ufw to port forward 80 -> 8080"
-        blockinfile:
-          dest: /etc/ufw/before.rules
-          marker: "# {mark} ANSIBLE MANAGED BLOCK"
-          insertbefore: "^\\*filter$"
-          block: |
-            *nat
-            :PREROUTING ACCEPT [0:0]
-            -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 8080
-            COMMIT
-        notify: "Restart ufw"
+    - name: "ufw forwarding"
+      lineinfile: dest=/etc/default/ufw
+        regexp="^DEFAULT_FORWARD_POLICY.*"
+        line=DEFAULT_FORWARD_POLICY="ACCEPT"
+      notify: "Restart ufw"
+
+    - name: "Set ufw to port forward 80 -> 8080"
+      blockinfile:
+        dest: /etc/ufw/before.rules
+        marker: "# {mark} ANSIBLE MANAGED BLOCK"
+        insertbefore: "^\\*filter$"
+        block: |
+          *nat
+          :PREROUTING ACCEPT [0:0]
+          -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 8080
+          COMMIT
+      notify: "Restart ufw"
+
+    - name: "ufw allow port 2375"
+      ufw: rule=allow port=2375 proto=tcp
 
   handlers:
     - name: "Restart ufw"

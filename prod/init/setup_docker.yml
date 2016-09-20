@@ -44,16 +44,3 @@
 
     - name: "Apply executable permission to docker-compose"
       file: path=/usr/local/bin/docker-compose state=touch mode=a+x
-
-    - name: "ufw forwarding"
-      lineinfile: dest=/etc/default/ufw
-        regexp="^DEFAULT_FORWARD_POLICY.*"
-        line=DEFAULT_FORWARD_POLICY="ACCEPT"
-      notify: "Restart ufw"
-
-    - name: "ufw allow port 2375"
-      ufw: rule=allow port=2375 proto=tcp
-
-  handlers:
-    - name: "Restart ufw"
-      service: name=ufw state=restarted
