@@ -1,11 +1,12 @@
 # Complete platform for http://paramsen.com
 _A modern Material Design CMS with a Dockerized platform for continous delivery_  
 Meant to run on a single Virtual Server for least expense, in my case on Linode for 10$/month 🤓.  
-Development environment contained in a Vagrant box [VirtualBox]  
+Full Continous Integration with Ansible [Provision and deploy the site to a virtual host without any manual steps]  
+Development environment contained in a Vagrant box [VirtualBox]  exactly resembles production server!  
 Schematic over system will go here soon enough 🤓
 
 ## Prerequirities
-- vagrant
+- Vagrant
 - Ansible
 - Node.js 6+
 - virtualbox guest additions for vagrant: (vagrant plugin install vagrant-vbguest)
@@ -13,6 +14,20 @@ Schematic over system will go here soon enough 🤓
 ## Setup
     ~> cd <directory of cloned>
     ~> git submodule update --init --recursive # This repo is separated into 3 git submodules, this, [be][], [fe][]
+
+## Run on server [production]
+Ansible enables us to provision (install necessary software on) our server, deploy and run the site without manual interaction.  
+
+To get the site up & running on a new virtual server, just;
+
+    ~> cd ./prod
+    ~> ansible-playbook init/setup.yml
+    # Ansible provisions your server with the necessary software/configs which might take ~20 minutes
+    ~> ansible-playbook deploy/deploy_fe.yml
+    ~> ansible-playbook deploy/deploy_containers.yml
+
+And we're up! Without Ansible this would take ~2 hours for this system, with more than 50 tasks to execute. Manually. Whew!  
+_If you were to run this, you'd need to create your own ./prod/vars/private.yml files (without .template.) and use your own Ansible inventory for your server IPs!_
 
 ## Run local [dev]: First start instructions
     ~> cd ./dev  
@@ -25,18 +40,6 @@ Schematic over system will go here soon enough 🤓
     ~> cd modules/fe/src && npm start  
     open browser -> browse to http://localhost:1337
 
-## Run on server [production]
-Currenct manual steps until Ansible:  
-* Conf. server
-    * install docker
-    * install docker-compose
-    * Setup non-privileged docker user, to not run docker with sudo in prod 
-    * create /www/db and /www/public folders, grant docker user read permission
-    * conf firewall redirect 80->8080 (& basic security)
-* Git clone this
-* Add env vars to satisfy ./modules/run/prod/docker-compose.yml
-* Setup backup of database file, maybe with systemd.time or cron
-* start docker-compose (cd ./modules/run/prod && docker-compose up)
 
 [be]: https://github.com/paramsen/fe.paramsen.com "backend"
 [fe]: https://github.com/paramsen/fe.paramsen.com "frontend"
