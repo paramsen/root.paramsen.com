@@ -6,7 +6,7 @@ Schematic over system will go here soon enough 🤓
 
 ## Prerequirities
 - vagrant
-- virtualbox
+- Ansible
 - Node.js 6+
 - virtualbox guest additions for vagrant: (vagrant plugin install vagrant-vbguest)
 

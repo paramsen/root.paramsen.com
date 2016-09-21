@@ -1,8 +1,8 @@
 ---
 - hosts: paramsendotcom
   vars_files:
-      - vars/private_server.yml
-      - vars/apt_packages.yml
+      - ../vars/private_server.yml
+      - ../vars/apt_packages.yml
   remote_user: root
   tasks:
       - name: "Set timezone to UTC"
@@ -22,6 +22,9 @@
       - name: "Update packages"
         apt: update_cache=yes cache_valid_time=3600 upgrade=safe
 
-      - name: "Install common packages"
+      - name: "Install required packages"
         apt: state=installed pkg={{ item }}
-        with_items: "{{ apt_common_packages }}"
+        with_items: "{{ apt_required_packages }}"
+      
+      - name: "Install the Python MySQLB module"
+        pip: name=MySQL-python

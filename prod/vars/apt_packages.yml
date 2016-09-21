@@ -4,5 +4,7 @@ apt_security_packages:
   - ufw
   - fail2ban
 
-apt_common_packages:
+apt_required_packages:
   - vim
+  - python-dev
+  - libmysqlclient-dev

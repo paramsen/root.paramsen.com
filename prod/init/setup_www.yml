@@ -1,7 +1,7 @@
 ---
 - hosts: paramsendotcom
   vars_files:
-      - vars/private_user.yml
+      - ../vars/private_user.yml
   remote_user: root
   tasks: 
     - name: "Add www user"
@@ -54,6 +54,3 @@
         creates=./node_modules
       become: true
       become_user: deploy
-
-    - name: "Copy environment variables"
-      copy: src=files/private_env.sh dest=/etc/profile.d/env.sh

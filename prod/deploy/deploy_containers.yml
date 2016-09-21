@@ -1,6 +1,9 @@
 ---
 - hosts: paramsendotcom
   remote_user: deploy
+  vars_files: 
+    - "../vars/private_www_env.yml"
+  environment: "{{ env_vars }}"
   tasks:
     - name: "Pull repo"
       git: repo=https://github.com/paramsen/root.paramsen.com.git

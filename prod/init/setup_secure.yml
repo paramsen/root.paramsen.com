@@ -1,8 +1,8 @@
 ---
 - hosts: paramsendotcom
   vars_files:
-    - vars/private_user.yml
-    - vars/apt_packages.yml
+    - ../vars/private_user.yml
+    - ../vars/apt_packages.yml
   remote_user: root
   tasks:
     - name: "Create unprivileged deploy user, add to sudo group for privilege escalation"
@@ -26,6 +26,9 @@
 
     - name: "Set ufw to allow ssh"
       ufw: rule=allow port=22 proto=tcp
+
+    - name: "Set ufw to allow 80"
+      ufw: rule=allow port=80 proto=tcp
 
     - name: "ufw forwarding"
       lineinfile: dest=/etc/default/ufw

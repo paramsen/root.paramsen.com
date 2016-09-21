@@ -1,16 +1,23 @@
 ---
 - hosts: paramsendotcom
+  remote_user: deploy
+  vars_files: 
+    - "../vars/private_www_env.yml"
+  environment: "{{ env_vars }}"
   tasks: 
     - name: "Get ip for db docker container"
       shell: docker inspect $(docker ps | grep mysql | cut -d " " -f1) | grep IPAddress | grep -v null| cut -d '"' -f 4 | tail -n 1
       register: ip
+      become: true
+      become_user: www
 
     - name: "Dump database"
       mysql_db: login_host={{ ip.stdout }} 
         login_user=root 
         login_password={{ ansible_env.MYSQL_ROOT_PASSWORD }}
+        name=all
         state=dump
         target=/tmp/dump.gz 
 
     - name: "Pull database dump"
-      synchronize:  src=/tmp/dump.sql dest=/tmp/dump.sql mode=pull
+      synchronize:  src=/tmp/dump.gz dest=/tmp/dump.gz mode=pull
