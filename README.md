@@ -26,6 +26,14 @@ To get the site up & running on a new virtual server, open a terminal and run;
 And we're up! Without Ansible this would take ~2 hours for this system, with more than 50 tasks to execute. Manually. Whew!  
 _If you were to run this, you'd need to create your own ./prod/vars/private.yml files (without .template.) and use your own Ansible inventory for your server IPs!_
 
+## Continous Integration: Deployment
+Deployment is automated with Ansible as well.
+
+    ~> ansible-playbook prod/deploy/deploy_containers.yml
+    # Pulls latest changes from repo, rebuilds docker containers and starts them with the latest code
+
+_We just deployed 3 docker containers remotely with one command 🤓_
+
 ## Run local [dev]: First start instructions
     ~> cd ./dev  
     ~> vagrant up  
