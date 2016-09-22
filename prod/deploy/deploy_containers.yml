@@ -1,9 +1,11 @@
 ---
 - hosts: paramsendotcom
-  remote_user: deploy
+  remote_user: root
   vars_files: 
     - "../vars/private_www_env.yml"
   environment: "{{ env_vars }}"
+  become_user: www
+  become_method: su
   tasks:
     - name: "Pull repo"
       git: repo=https://github.com/paramsen/root.paramsen.com.git
@@ -15,10 +17,8 @@
       shell: docker-compose stop
         chdir=/www/paramsendotcom/modules/run/prod
       become: true
-      become_user: www
 
     - name: "Rebuild & run docker containers"
       shell: docker-compose up --build -d
         chdir=/www/paramsendotcom/modules/run/prod
       become: true
-      become_user: www

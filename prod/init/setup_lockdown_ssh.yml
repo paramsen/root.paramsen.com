@@ -3,13 +3,6 @@
   remote_user: deploy
   become: true
   tasks:
-      - name: "Disable root user login"
-        lineinfile: dest=/etc/ssh/sshd_config
-            regexp="^PermitRootLogin.*"
-            line="PermitRootLogin no"
-            state=present
-        notify: "Restart ssh"
-
       - name: "Disable password login"
         lineinfile: dest=/etc/ssh/sshd_config
           regexp="^PasswordAuthentication.*"

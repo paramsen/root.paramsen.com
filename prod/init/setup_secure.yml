@@ -11,7 +11,10 @@
         groups=sudo
         shell=/bin/bash
             
-    - name: "Copy private key for ssh login"
+    - name: "Copy private key for ssh login: root"
+      authorized_key: user=root key="{{ lookup('file', '{{ root_ssh_key_path }}') }}"
+
+    - name: "Copy private key for ssh login: deploy"
       authorized_key: user=deploy key="{{ lookup('file', '{{ deploy_ssh_key_path }}') }}"
 
     - name: "Install security packages"

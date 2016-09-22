@@ -9,3 +9,4 @@ apt_required_packages:
   - python-pip
   - python-dev
   - libmysqlclient-dev
+  - curl
