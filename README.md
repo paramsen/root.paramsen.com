@@ -35,6 +35,8 @@ Deployment is automated with Ansible as well.
 _We just deployed 3 docker containers remotely with one command 🤓_
 
 ## Run local [dev]: First start instructions
+_This is being rewritten with Ansible, but for now;_
+
     ~> cd ./dev  
     ~> vagrant up  
     #Wait until it is up & running, open new terminal
