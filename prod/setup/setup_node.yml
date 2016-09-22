@@ -5,6 +5,7 @@
       shell: curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
       args:
         creates: /usr/bin/node
+        executable: /bin/bash
 
     - name: "Install Node.js & build-essential (for building npm dependencies)"
       apt: state=installed pkg={{ item }}

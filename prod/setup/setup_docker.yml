@@ -39,8 +39,10 @@
       group: name=docker
 
     - name: "Install docker-compose"
-       shell: curl -L https://github.com/docker/compose/releases/download/1.8.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
-        creates=/usr/local/bin/docker-compose
+      shell: curl -L https://github.com/docker/compose/releases/download/1.8.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
+      args:
+        creates: /usr/local/bin/docker-compose
+        executable: /bin/bash
 
     - name: "Apply executable permission to docker-compose"
       file: path=/usr/local/bin/docker-compose state=touch mode=a+x

@@ -3,3 +3,7 @@
 **.DS_STORE
 **npm-debug.log
 public
+
+# prod
+prod/**/*private*
+prod/**/*.retry

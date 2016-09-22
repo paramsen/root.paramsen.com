@@ -1,0 +1,9 @@
+---
+- include: setup/setup_server.yml
+- include: setup/setup_secure.yml
+- include: setup/setup_docker.yml
+- include: setup/setup_node.yml
+- include: setup/setup_www.yml
+- include: setup/setup_lockdown_ssh.yml
+- include: deploy/deploy_fe.yml
+- include: deploy/deploy_containers.yml

@@ -9,7 +9,7 @@ Schematic over system will go here soon enough 🤓
 - Vagrant
 - Ansible
 - Node.js 6+
-- virtualbox guest additions for vagrant: (vagrant plugin install vagrant-vbguest)
+- Virtualbox Guest Additions for vagrant: (vagrant plugin install vagrant-vbguest)
 
 ## Setup
     ~> cd <directory of cloned>
@@ -18,13 +18,10 @@ Schematic over system will go here soon enough 🤓
 ## Run on server [production]
 Ansible enables us to provision (install necessary software on) our server, deploy and run the site without manual interaction.  
 
-To get the site up & running on a new virtual server, just;
+To get the site up & running on a new virtual server, open a terminal and run;
 
-    ~> cd ./prod
-    ~> ansible-playbook init/setup.yml
-    # Ansible provisions your server with the necessary software/configs which might take ~20 minutes
-    ~> ansible-playbook deploy/deploy_fe.yml
-    ~> ansible-playbook deploy/deploy_containers.yml
+    ~> ansible-playbook prod/setup.yml
+    # Ansible provisions your server with the necessary software/configs and starts the Docker containers, takes ~10 minutes
 
 And we're up! Without Ansible this would take ~2 hours for this system, with more than 50 tasks to execute. Manually. Whew!  
 _If you were to run this, you'd need to create your own ./prod/vars/private.yml files (without .template.) and use your own Ansible inventory for your server IPs!_

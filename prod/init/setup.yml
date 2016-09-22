@@ -1,7 +1,0 @@
----
-- include: setup_server.yml
-- include: setup_secure.yml
-- include: setup_docker.yml
-- include: setup_node.yml
-- include: setup_www.yml
-- include: setup_lockdown_ssh.yml
